@@ -1,20 +1,38 @@
-const candidateAccount = require("../../infra/database/mongoose/models/CandidateAccount");
-const companyAccount = require("../../infra/database/mongoose/models/CompanyAccount");
+const fs = require("fs");
+const Product = require("../../infra/database/mongoose/models/Product");
 
 module.exports = () => {
-  const createCandidate = async (candidateData) => {
-    console.log(candidateData);
-    const candidate = await candidateAccount.create(candidateData);
-    return candidate;
+  const getAllProducts = async () => {
+    return await Product.find({});
   };
 
-  const createCompany = async (companyData) => {
-    const company = await companyAccount.create(companyData);
-    return company;
+  const createProduct = async (productInfo, productImage) => {
+    let product = new Product({ ...productInfo, productImage });
+    await product.save();
+    return product;
+  };
+
+  const editProduct = async (id, productData) => {
+    const product = await Product.findOne({ _id: id });
+    if (productData.name) product.name = productData.name;
+    if (productData.category) product.category = productData.category;
+    if (productData.description) product.description = productData.description;
+    if (productData.productImage)
+      product.productImage = productData.productImage;
+    if (productData.lat) product.lat = productData.lat;
+    if (productData.long) product.long = productData.long;
+    await product.save();
+    return product;
+  };
+
+  const deleteProduct = async (id) => {
+    return Product.findByIdAndRemove({ _id: id });
   };
 
   return {
-    createCandidate,
-    createCompany,
+    getAllProducts,
+    createProduct,
+    editProduct,
+    deleteProduct,
   };
 };
