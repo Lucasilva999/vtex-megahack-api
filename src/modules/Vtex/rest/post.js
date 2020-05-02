@@ -1,10 +1,9 @@
 module.exports = (dao) => {
-  const createCandidateAccount = async (body) => {
-    await dao.createCandidate(body);
-    return body;
+  const createProduct = async (productInfo, productImage) => {
+    return await dao.createProduct(productInfo, productImage);
   };
 
   return {
-    createCandidateAccount,
+    createProduct,
   };
 };
