@@ -4,7 +4,13 @@ module.exports = (dao) => {
     return products;
   };
 
+  const identifyNearPoints = async (lat, lon) => {
+    const clientLocation = [lat, lon];
+    return dao.returnClosestProducts(clientLocation);
+  };
+
   return {
     getAllProducts,
+    identifyNearPoints,
   };
 };

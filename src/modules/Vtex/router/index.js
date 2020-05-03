@@ -79,5 +79,27 @@ module.exports = ({ get, post, put, del }) => () => {
     }
   });
 
+  router.get("/geolocation", async (req, res) => {
+    try {
+      const data = await get.identifyNearPoints(req.query.lat, req.query.lon);
+      if (!data) {
+        res.status(404).json({
+          data,
+          message: "Nenhum produto localizado próximo de você",
+        });
+      }
+      res.status(200).json({
+        data,
+        message: "Produtos próximos localizados com sucesso",
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        data: null,
+        message: "Internal Server Error",
+      });
+    }
+  });
+
   return { router, endpoint: "/" };
 };

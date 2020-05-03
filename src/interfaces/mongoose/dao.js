@@ -33,10 +33,20 @@ module.exports = () => {
     return Product.findByIdAndRemove({ _id: id });
   };
 
+  const returnClosestProducts = async (clientLocation) => {
+    return await Product.find({
+      geo: {
+        $near: clientLocation,
+        $maxDistance: 10 / 111.12,
+      },
+    });
+  };
+
   return {
     getAllProducts,
     createProduct,
     editProduct,
     deleteProduct,
+    returnClosestProducts,
   };
 };
