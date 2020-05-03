@@ -30,6 +30,11 @@ const ProductSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    status: {
+      type: String,
+      enum: ["ON ANALYSIS", "APPROVED", "REJECTED"],
+      default: "ON ANALYSIS",
+    },
   },
   {
     timestamps: true,
