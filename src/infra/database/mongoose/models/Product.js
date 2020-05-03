@@ -22,13 +22,9 @@ const ProductSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    lat: {
-      type: String,
-      required: false,
-    },
-    long: {
-      type: String,
-      required: false,
+    geo: {
+      type: [Number],
+      index: "2d",
     },
     status: {
       type: String,
