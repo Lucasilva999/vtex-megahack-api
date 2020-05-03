@@ -12,16 +12,20 @@ module.exports = () => {
     return product;
   };
 
-  const editProduct = async (id, productData) => {
-    const product = await Product.findOne({ _id: id });
-    if (productData.name) product.name = productData.name;
-    if (productData.category) product.category = productData.category;
-    if (productData.description) product.description = productData.description;
-    if (productData.productImage)
-      product.productImage = productData.productImage;
-    if (productData.lat) product.lat = productData.lat;
-    if (productData.long) product.long = productData.long;
-    await product.save();
+  const editProduct = async (productData, productImage) => {
+    const product = await Product.findById(productData._id);
+    if (product) {
+      if (productData.name) product.name = productData.name;
+      if (productData.category) product.category = productData.category;
+      if (productData.description)
+        product.description = productData.description;
+      if (productImage) product.productImage = productImage;
+      if (productData.lat) product.lat = productData.lat;
+      if (productData.long) product.long = productData.long;
+      if (productData.status) product.status = productData.status;
+      await product.save();
+    }
+
     return product;
   };
 
