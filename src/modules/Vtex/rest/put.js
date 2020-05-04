@@ -3,7 +3,12 @@ module.exports = (dao) => {
     return await dao.editProduct(productInfo, productImage);
   };
 
+  const updateOrderStatus = async (orderInfo) => {
+    return await dao.updateOrderStatus(orderInfo);
+  };
+
   return {
     editProduct,
+    updateOrderStatus,
   };
 };

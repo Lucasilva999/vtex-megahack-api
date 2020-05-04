@@ -1,5 +1,5 @@
-const fs = require("fs");
 const Product = require("../../infra/database/mongoose/models/Product");
+const ProductOrder = require("../../infra/database/mongoose/models/ProductOrder");
 
 module.exports = () => {
   const getAllProducts = async () => {
@@ -23,6 +23,7 @@ module.exports = () => {
       if (productData.lat) product.lat = productData.lat;
       if (productData.long) product.long = productData.long;
       if (productData.status) product.status = productData.status;
+      if (productData.sold) product.sold = productData.sold;
       await product.save();
     }
 
@@ -42,11 +43,26 @@ module.exports = () => {
     });
   };
 
+  const createOrder = async (orderInfo) => {
+    return await ProductOrder.create(orderInfo);
+  };
+
+  const updateOrderStatus = async (orderInfo) => {
+    const order = await ProductOrder.findById(orderInfo._id);
+    if (order) {
+      if (orderInfo.orderStatus) order.orderStatus = orderInfo.orderStatus;
+      await order.save();
+    }
+    return order;
+  };
+
   return {
     getAllProducts,
     createProduct,
     editProduct,
     deleteProduct,
     returnClosestProducts,
+    createOrder,
+    updateOrderStatus,
   };
 };

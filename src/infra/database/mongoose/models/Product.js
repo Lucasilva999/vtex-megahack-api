@@ -31,6 +31,10 @@ const ProductSchema = mongoose.Schema(
       enum: ["ON ANALYSIS", "APPROVED", "REJECTED"],
       default: "ON ANALYSIS",
     },
+    sold: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
