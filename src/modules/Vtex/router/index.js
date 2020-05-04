@@ -101,5 +101,43 @@ module.exports = ({ get, post, put, del }) => () => {
     }
   });
 
+  router.post("/order", async (req, res) => {
+    try {
+      const data = await post.createOrder(req.body);
+      res.status(201).json({
+        data,
+        message: "Produto cadastrado com sucesso",
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        data: null,
+        message: "Internal Server Error",
+      });
+    }
+  });
+
+  router.put("/order/update", async (req, res) => {
+    try {
+      const data = await put.updateOrderStatus(req.body);
+      if (!data) {
+        res.status(400).json({
+          data,
+          message: "Produto não encontrado",
+        });
+      }
+      res.status(200).json({
+        data,
+        message: "Produto alterado com sucesso",
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        data: null,
+        message: "Internal Server Error",
+      });
+    }
+  });
+
   return { router, endpoint: "/" };
 };
